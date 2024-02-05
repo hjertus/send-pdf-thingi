@@ -1,0 +1,17 @@
+# Use an official Python runtime as a base image
+FROM python:3
+
+# Set the working directory
+WORKDIR /app
+ 
+# Copy only the necessary files
+COPY src src/
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+ENV SECRET_KEY=secret_key
+
+# Set the entry point
+CMD ["python", "src/public_app.py"]

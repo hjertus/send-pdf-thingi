@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF to Brother Printer</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload a pdf to print</h1>
+        <form method="POST" enctype="multipart/form-data" class="box">
+            <div class="dotted_box">
+                <label for="pdf" class="custom-file-label">Choose a PDF file</label>
+                <input type="file" name="pdf" id="pdf">
+            </div>
+            <input type="submit" value="Print" id="button-delopp">
+        </form>
+    </div>
+</body>
+</html>

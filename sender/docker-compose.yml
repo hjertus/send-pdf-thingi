@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile_local
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./pdf:/app/pdf
+    restart: unless-stopped
+
+  mypublicapp:
+    build:
+      context: .
+      dockerfile: Dockerfile_public
+    ports:
+      - "5000:5000"
+    environment:
+      - SECRET_KEY=example
+    volumes:
+      - ./pdf:/app/pdf
+    restart: unless-stopped
