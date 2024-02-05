@@ -9,7 +9,7 @@ COPY src src/
 COPY requirements.txt .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements_local.txt
 
 # Set the entry point
 CMD ["python", "src/local_app.py"]

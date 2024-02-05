@@ -1,4 +1,4 @@
-
+from PyPDF2 import PdfReader, PdfWriter
 from flask import Flask, render_template, redirect, url_for, request
 import os
 import requests
@@ -47,7 +47,41 @@ def upload_pdf():
         if pdf_file:
             # Save the PDF in the same directory as the script
             pdf_path = f'{save_directory}/pdf.pdf'
-            pdf_file.save(pdf_path)
+
+            if not os.path.exists(pdf_path):
+                pdf_file.save(pdf_path)
+                print("File saved successfully.")
+            else:
+                print("File already exists. Merging...")
+                temp_pdf = f'{save_directory}/temp.pdf'
+                pdf_file.save(temp_pdf)
+
+                # Load existing PDF
+                existing_pdf = PdfReader(pdf_path)
+                existing_pages = existing_pdf.pages
+
+                # Load new PDF
+                new_pdf = PdfReader(temp_pdf)
+                new_pages = new_pdf.pages
+
+                # Create a writer object for writing to the existing PDF
+                writer = PdfWriter()
+
+                # Add existing pages to the writer
+                for page in existing_pages:
+                    writer.add_page(page)
+
+                # Add new pages to the writer
+                for page in new_pages:
+                    writer.add_page(page)
+
+                # Write the combined pages to the existing PDF file
+                with open(pdf_path, "wb") as f:
+                    writer.write(f)
+
+                os.remove(temp_pdf)
+
+                print("Files merged successfully.")
 
             # Redirect back to the first page with an empty file input field
             return redirect(url_for('upload_pdf'))
