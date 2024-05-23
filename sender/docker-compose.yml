@@ -1,0 +1,26 @@
+  GNU nano 6.2                                       docker-compose.yml                                                 version: '3.8'
+
+services:
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile_local
+    volumes:
+      - ./src:/app/src
+      - ./pdf:/app/pdf
+    ports:
+      - "5001:5001"  # Map port 5001 on the container to port 5001 on the host
+    command: python src/local_app.py
+
+  mypublicapp:
+    build:
+      context: .
+      dockerfile: Dockerfile_public
+    volumes:
+      - ./src:/app/src
+      - ./pdf:/app/pdf
+    ports:
+      - "5000:5000"  # Map port 5000 on the container to port 5000 on the host
+    environment:
+      - SECRET_KEY=mysecretkey
+    command: python src/public_app.py
