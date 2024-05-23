@@ -28,7 +28,8 @@ def upload_from_url(url_for_pdf):
                 f.write(chunk)
 
         # Return a response or redirect as needed
-        return "Processing complete!"
+        print("PDF downloaded successfully.")
+        return redirect(url_for('upload_pdf'))
 
     except requests.RequestException as e:
         return f"Failed to download PDF from {url_for_pdf}. Error: {str(e)}"
