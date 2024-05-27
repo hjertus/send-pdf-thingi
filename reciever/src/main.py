@@ -50,11 +50,11 @@ def check_website(url, secret_key, local_pdf_path):
     except requests.ConnectionError:
         print("Failed to connect to the website. Retrying...")
 
-# Example usage
-website_url = "http://100.85.40.125:5000/get_pdf"
 
 # Load environment variables from .env file
 load_dotenv()
+
+website_url = os.getenv("WEBSITE_URL")
 secret_key = os.getenv("SECRET_KEY")
 local_pdf_path = "pdf/pdf.pdf"  # Specify the local directory and filename
 
